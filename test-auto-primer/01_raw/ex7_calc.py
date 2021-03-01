@@ -18,7 +18,7 @@
 from faulty_calc import Calc
 from asserter import *
 
-# Let's deal with pass/fail and exceptions.
+# Let's deal with the fixture problem now.
 
 calc = None
 

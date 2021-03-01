@@ -17,7 +17,7 @@
 
 from faulty_calc import Calc
 
-# Let's deal with pass/fail and exceptions.
+# Let's deal with test discovery and reusable exception handling.
 
 def test1():
     calc = Calc()
