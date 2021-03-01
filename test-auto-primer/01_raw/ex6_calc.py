@@ -16,6 +16,7 @@
 # limitations under the License.
 
 from faulty_calc import Calc
+from asserter import *
 
 # Let's deal with pass/fail and exceptions.
 
@@ -23,8 +24,7 @@ def test1():
     calc = Calc()
     calc.start(5)
     output = calc.add(4)
-    if output != 9:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(9, output))
+    assert_equals(output, 9, "Wrong Calculation.")
     calc.reset()
 
 def test2():
@@ -32,8 +32,7 @@ def test2():
     calc.start(5)
     calc.add(3)
     output = calc.add(4)
-    if output != 12:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(12, output))
+    assert_equals(output, 12, "Wrong Calculation.")
     calc.reset()
 
 def test3():
@@ -41,20 +40,14 @@ def test3():
     calc.start(5)
     calc.sub(3)
     output = calc.sub(1)
-    if output != 1:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(1, output))
+    assert_equals(output, 1, "Wrong Calculation.")
     calc.reset()
 
 def test4():
     calc = Calc()
     calc.start(5)
     output = calc.add(4)
-    try:
-        calc.complain()
-    except Exception:
-        pass
-    else:
-        raise Exception("Expected exception not raised.")
+    assert_exc(calc.complain, "Expected", "Calc did not complain properly.")
     calc.reset()
 
 def test5():

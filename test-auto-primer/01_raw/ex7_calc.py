@@ -16,53 +16,45 @@
 # limitations under the License.
 
 from faulty_calc import Calc
+from asserter import *
 
 # Let's deal with pass/fail and exceptions.
 
-def test1():
+calc = None
+
+def setup():
+    global calc
     calc = Calc()
-    calc.start(5)
-    output = calc.add(4)
-    if output != 9:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(9, output))
+
+def teardown():
     calc.reset()
 
+def test1():
+    calc.start(5)
+    output = calc.add(4)
+    assert_equals(output, 9, "Wrong Calculation.")
+
 def test2():
-    calc = Calc()
     calc.start(5)
     calc.add(3)
     output = calc.add(4)
-    if output != 12:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(12, output))
-    calc.reset()
+    assert_equals(output, 12, "Wrong Calculation.")
 
 def test3():
-    calc = Calc()
     calc.start(5)
     calc.sub(3)
     output = calc.sub(1)
-    if output != 1:
-        raise AssertionError("Wrong calculation. Expected: {}. Got {}".format(1, output))
-    calc.reset()
+    assert_equals(output, 1, "Wrong Calculation.")
 
 def test4():
-    calc = Calc()
     calc.start(5)
     output = calc.add(4)
-    try:
-        calc.complain()
-    except Exception:
-        pass
-    else:
-        raise Exception("Expected exception not raised.")
-    calc.reset()
+    assert_exc(calc.complain, "Expected", "Calc did not complain properly.")
 
 def test5():
-    calc = Calc()
     calc.start(5)
     output = calc.add(4)
     calc.why_complain() # Code exit
-    calc.reset()
 
 
 # Find all functions that start with the word test
@@ -72,7 +64,9 @@ for test in all_tests:
     # Dynamically call test function
     tfunc = globals()[test]
     try:
+        setup() # This itself will have try/except/else block in practice
         tfunc()
+        teardown() # This itself will have try/except/else block in practice
     except AssertionError as e:
         print("FAIL: {}".format(e))
     except Exception as f:
