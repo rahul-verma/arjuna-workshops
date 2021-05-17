@@ -1,0 +1,8 @@
+
+user_options:
+  wp.host: &host "http://192.168.56.101"
+  wp.app.url: *host
+  wp.login.url: !join [*host, "/wp-admin"]
+  wp.logout.url: !join [*host, "/wp-login.php?action=logout"]
+  wp.admin.name: user
+  wp.admin.pwd: bitnami
