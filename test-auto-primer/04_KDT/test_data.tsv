@@ -1,0 +1,5 @@
+TestName	Method	Endpoint	Payload	ExpectedStatus	SchemaValidation	
+CreatePost	POST	/posts	{"title":"foo","body":"bar","userId":1}	201	True	
+ReadPost	GET	/posts/1	{}	200	True	
+UpdatePost	PUT	/posts/1	{"id":1,"title":"updated","body":"updated","userId":1}	200	True	
+DeletePost	DELETE	/posts/1	{}	200	False
